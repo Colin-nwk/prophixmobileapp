@@ -13,6 +13,7 @@ export type RouteListProps = {
       Login: undefined;
       Drawer: undefined;
       Bottom: undefined;
+      PostJob: undefined;
       General: undefined;
       Stack: undefined;
       Auth: undefined;

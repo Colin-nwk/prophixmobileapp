@@ -5,17 +5,23 @@ const OnBoardingImage = () => {
   const { width, height } = Dimensions.get("window");
   return (
     <>
-      <View style={{ height: height * 0.6 }} className="rounded-b-full">
+      <View className="">
         <Image
           source={require("../../assets/images/general/boarding.png")}
-          className="h-full object-cover "
-          style={{ width: width }}
+          className=""
+          style={{
+            width: width,
+            height: height * 0.7,
+            objectFit: "fill",
+            // borderBottomRightRadius: 100,
+            // borderBottomRightRadius:100,
+          }}
         />
       </View>
       <View className="flex justify-center items-center">
         <Image
           source={require("../../assets/prophix/logoWhite.png")}
-          className="h-fit w-fit object-contain z-20 absolute -top-40 "
+          className="h-fit w-fit object-contain z-20 absolute -top-28"
           // style={{ width: width }}
         />
       </View>

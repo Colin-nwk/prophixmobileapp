@@ -8,8 +8,9 @@ import {
   Image,
   Pressable,
   FlatList,
+  ScrollView,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -30,7 +31,31 @@ const SignupOne: React.FC<Props> = ({ navigation }) => {
   const { width } = Dimensions.get("window");
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const ref = useRef<object | null>(null);
+  const ref = useRef<FlatList | null>(null);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      title: "Sign up",
+      headerStyle: {
+        backgroundColor: "#fff",
+        borderBottomColor: "transparent",
+        shadowColor: "transparent",
+      },
+
+      headerLeft: () => (
+        <Pressable className="ml-3" onPress={() => navigation.goBack()}>
+          <Ionicons
+            name="arrow-back-circle-outline"
+            size={24}
+            className="border-gray-600/30"
+            color="gray"
+          />
+        </Pressable>
+      ),
+    });
+  }, []);
+
   const updateCurrentSlideIndex = (e: any) => {
     const currentOffsetX = e.nativeEvent.contentOffset.x;
 
@@ -45,6 +70,7 @@ const SignupOne: React.FC<Props> = ({ navigation }) => {
     if (nextSlideIndex != slides.length) {
       const offset = nextSlideIndex * width;
       ref?.current?.scrollToOffset({ offset });
+      console.warn(width);
       console.warn(offset);
     }
     setCurrentSlideIndex(nextSlideIndex);
@@ -75,7 +101,7 @@ const SignupOne: React.FC<Props> = ({ navigation }) => {
 
   const TitleSlide = () => {
     return (
-      <View className="flex-row mx-auto mt-14" style={{ width: width * 0.95 }}>
+      <View className="flex-row mx-auto" style={{ width: width * 0.95 }}>
         {slides.map((item, index) => (
           <View key={item.id} className="">
             {currentSlideIndex == index ? (
@@ -95,7 +121,7 @@ const SignupOne: React.FC<Props> = ({ navigation }) => {
     return (
       <View
         // style={{ width: width * 0.95 }}
-        className="flex-row justify-center items-center space-x-2 mx-auto w-full mt-5"
+        className="flex-row justify-center items-center space-x-2 mx-auto  mt-5"
       >
         {slides.map((item, index) => (
           <View key={item.id} className="items-center">
@@ -105,7 +131,7 @@ const SignupOne: React.FC<Props> = ({ navigation }) => {
               }`}
               style={{ width: width * 0.31 }}
             ></View>
-            <Text className="text-2xl text-slate-500 capitalize mt-2">
+            <Text className="text-xl text-slate-500 capitalize mt-2">
               {item.type}
             </Text>
           </View>
@@ -119,18 +145,18 @@ const SignupOne: React.FC<Props> = ({ navigation }) => {
   const Slide = ({ item }: any) => {
     return (
       <View
-        className=" space-y-4 mx-auto"
+        className=" space-y-4"
         key={item.id}
         style={{ width: width * 0.95 }}
       >
-        <View className="my-6">
+        {/* <View className="my-6">
           <Text
             className="text-xl text-gray-700 text-ellipsis"
             numberOfLines={2}
           >
             {item.title}
           </Text>
-        </View>
+        </View> */}
         {item.component}
       </View>
     );
@@ -139,20 +165,13 @@ const SignupOne: React.FC<Props> = ({ navigation }) => {
   return (
     <View className="flex-1 w-full h-full bg-white">
       <StatusBar style="auto" />
-      <SafeAreaView className="w-full mx-auto">
-        <View className="flex-row mt-2 justify-start items-center  space-x-5 ">
-          <TouchableOpacity
-            className="ml-2 pr-[2px] rounded-full border w-8 h-8 justify-center items-end border-gray-600/30"
-            onPress={() => navigation.goBack()}
-          >
-            <Ionicons name="arrow-back" size={24} color="black" />
-          </TouchableOpacity>
-          <Text className="text-4xl text-[#202430] font-bold">Sign up</Text>
-        </View>
-      </SafeAreaView>
       <TitleSlide />
       <Header />
-      <View style={{ width: width * 0.95 }} className=" mx-auto ">
+      <ScrollView
+        style={{ width: width * 0.95 }}
+        className=" mx-auto flex-1 "
+        showsVerticalScrollIndicator={false}
+      >
         <FlatList
           ref={ref}
           data={slides}
@@ -166,29 +185,30 @@ const SignupOne: React.FC<Props> = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => <Slide item={item} />}
         />
-      </View>
-      <View className="mx-auto mt-14" style={{ width: width * 0.95 }}>
-        {currentSlideIndex != slides.length - 1 ? (
-          <TouchableOpacity
-            className="bg-primary py-4 rounded-lg items-center justify-center border border-primary mx-auto"
-            activeOpacity={0.75}
-            style={{ width: width * 0.94 }}
-            onPress={goNextSlide}
-          >
-            <Text className="text-white text-center text-2xl ">Next</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            className="bg-primary py-4 rounded-lg items-center justify-center border border-primary mx-auto"
-            activeOpacity={0.75}
-            style={{ width: width * 0.94 }}
-          >
-            <Text className="text-white text-center text-2xl ">
-              Create Account
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
+
+        <View className="mx-auto my-4" style={{ width: width * 0.95 }}>
+          {currentSlideIndex != slides.length - 1 ? (
+            <TouchableOpacity
+              className="bg-primary py-2.5 rounded-lg items-center justify-center border border-primary"
+              activeOpacity={0.75}
+              style={{ width: width * 0.94 }}
+              onPress={goNextSlide}
+            >
+              <Text className="text-white text-center text-xl ">Next</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              className="bg-primary py-2.5 rounded-lg items-center justify-center border border-primary "
+              activeOpacity={0.75}
+              style={{ width: width * 0.94 }}
+            >
+              <Text className="text-white text-center text-xl ">
+                Create Account
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };

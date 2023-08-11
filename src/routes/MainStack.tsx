@@ -3,6 +3,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { RouteListProps } from "../types";
 import DrawerStack from "./DrawerStack";
+import PostJob from "../screens/jobs/PostJob";
 
 const MainStack = () => {
   const Stack = createStackNavigator<RouteListProps>();
@@ -17,11 +18,11 @@ const MainStack = () => {
         options={{ headerShown: false }}
       />
 
-      {/* <MainStack.Screen
-        name="Bottom"
-        component={Bottom}
-        options={{ headerShown: false }}
-      /> */}
+      <Stack.Screen
+        name="PostJob"
+        component={PostJob}
+        options={{ headerTitle: "Post Job" }}
+      />
     </Stack.Navigator>
   );
 };

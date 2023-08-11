@@ -17,6 +17,7 @@ const BottomStack = () => {
     <Bottom.Navigator
       initialRouteName="Home"
       screenOptions={{
+        // headerShown: false,
         tabBarStyle: { padding: 5 },
         tabBarActiveTintColor: "#F0363B",
       }}

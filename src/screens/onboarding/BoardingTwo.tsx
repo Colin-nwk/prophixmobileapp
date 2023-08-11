@@ -25,39 +25,39 @@ const BoardingTwo: React.FC<Props> = ({ navigation }) => {
       <StatusBar barStyle="light-content" />
 
       <OnBoardingImage />
-      <SafeAreaView
-        className="mx-auto justify-center items-center  gap-y-10"
+      <View
+        className="mx-auto justify-between space-y-3 items-center mt-3"
         style={{ width: width * 0.95 }}
       >
         <TouchableOpacity
-          className="bg-primary py-4 rounded-lg flex-row items-center justify-center gap-x-2 border border-primary"
+          className="bg-primary py-2.5 rounded-lg flex-row items-center justify-center space-x-2 border border-primary"
           activeOpacity={0.75}
-          style={{ width: width * 0.9 }}
+          style={{ width: width * 0.94 }}
           onPress={() => navigation.navigate("Login")}
         >
-          <Text className="text-white text-center text-2xl ">
+          <Text className="text-white text-center text-xl ">
             Continue as User
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          className="bg-black py-4 rounded-lg flex-row items-center justify-center gap-x-2 border border-black"
+          className="bg-black py-2.5 rounded-lg flex-row items-center justify-center space-x-2 border border-black"
           activeOpacity={0.75}
-          style={{ width: width * 0.9 }}
+          style={{ width: width * 0.94 }}
         >
-          <Text className="text-white text-center text-2xl ">
+          <Text className="text-white text-center text-xl ">
             Continue as a Worker
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          className="bg-white  py-4 rounded-lg flex-row items-center justify-center gap-x-2 border border-black "
+          className="bg-white  py-2.5 rounded-lg flex-row items-center justify-center space-x-2 border border-black "
           activeOpacity={0.75}
-          style={{ width: width * 0.9 }}
+          style={{ width: width * 0.94 }}
         >
-          <Text className="text-black text-center text-2xl ">
+          <Text className="text-black text-center text-xl ">
             Continue as Vendor
           </Text>
         </TouchableOpacity>
-      </SafeAreaView>
+      </View>
     </View>
   );
 };

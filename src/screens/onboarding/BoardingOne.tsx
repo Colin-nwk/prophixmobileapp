@@ -25,7 +25,9 @@ type Props = {
 const BoardingOne: React.FC<Props> = ({ navigation }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
-  const ref = useRef<object | null>(null);
+  const { width, height } = Dimensions.get("window");
+
+  const ref = useRef<FlatList | null>(null);
   const slides = [
     {
       id: "1",
@@ -54,15 +56,15 @@ const BoardingOne: React.FC<Props> = ({ navigation }) => {
   const Slide = ({ item }: any) => {
     return (
       <View
-        className="items-center  justify-center flex space-y-4"
+        className="items-center  justify-center  space-y-1.5 mx-auto"
         key={item.id}
-        style={{ width }}
+        style={{ width: width * 0.95 }}
       >
-        <Text className="text-4xl font-bold text-ellipsis" numberOfLines={2}>
+        <Text className="text-2xl font-bold text-ellipsis" numberOfLines={2}>
           {item.title}
         </Text>
         <Text
-          className="text-lg mt-1 w-3/4 leading-6 text-center"
+          className="text-lg text-ellipsis px-4 leading-6 text-center"
           numberOfLines={3}
         >
           {item.description}
@@ -73,60 +75,53 @@ const BoardingOne: React.FC<Props> = ({ navigation }) => {
 
   const Footer = () => {
     return (
-      <View
-        className=" justify-between my-3 px-5"
-        style={{ height: height * 0.1, width: width }}
-      >
-        <View>
-          <View className="flex-row justify-center gap-x-4 items-center ">
-            {slides.map((_, index) => (
-              <View
-                className={`h-3 w-3  rounded-full ${
-                  currentSlideIndex == index ? "bg-primary" : "bg-slate-300"
-                }`}
-                key={index}
-              ></View>
-            ))}
-          </View>
-
-          {currentSlideIndex != slides.length - 1 ? (
-            <View className="flex-row justify-between  items-center mt-14 mx-1">
-              <TouchableOpacity
-                className="bg-transparent border border-primary w-40 py-4 rounded-lg flex-row items-center justify-center gap-x-2"
-                activeOpacity={0.75}
-                onPress={skipSlide}
-              >
-                <Text className="text-primary text-center text-lg">Skip</Text>
-                <Entypo name="forward" size={24} color="#F0363B" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                className="bg-primary w-40 py-4 rounded-lg flex-row items-center justify-center gap-x-2 border border-primary"
-                activeOpacity={0.75}
-                onPress={goNextSlide}
-              >
-                <Text className="text-white text-center text-lg">Next</Text>
-                <Ionicons name="arrow-forward" size={24} color="white" />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View className="flex-row justify-end  items-center mt-14 mx-1">
-              <TouchableOpacity
-                className="bg-primary w-40 py-4 rounded-lg flex-row items-center justify-center gap-x-2 border border-primary"
-                activeOpacity={0.75}
-                onPress={isBoarded}
-              >
-                <Text className="text-white text-center text-xl">
-                  Get Started
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
+      <View className="  mt-2">
+        <View className="flex-row justify-center space-x-4 items-center ">
+          {slides.map((_, index) => (
+            <View
+              className={`h-3 w-3  rounded-full ${
+                currentSlideIndex == index ? "bg-primary" : "bg-slate-300"
+              }`}
+              key={index}
+            ></View>
+          ))}
         </View>
+
+        {currentSlideIndex != slides.length - 1 ? (
+          <View className="flex-row justify-between  items-center mt-3  ">
+            <TouchableOpacity
+              className="bg-transparent border border-primary w-28 py-2 rounded-lg flex-row items-center justify-center space-x-2"
+              activeOpacity={0.75}
+              onPress={skipSlide}
+            >
+              <Text className="text-primary text-center text-lg">Skip</Text>
+              <Entypo name="forward" size={24} color="#F0363B" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="bg-primary w-28 py-2 rounded-lg flex-row items-center justify-center space-x-2 border border-primary"
+              activeOpacity={0.75}
+              onPress={goNextSlide}
+            >
+              <Text className="text-white text-center text-lg">Next</Text>
+              <Ionicons name="arrow-forward" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View className="flex-row justify-end  items-center mt-3">
+            <TouchableOpacity
+              className="bg-primary w-36 py-2 rounded-lg flex-row items-center justify-center space-x-2 border border-primary"
+              activeOpacity={0.75}
+              onPress={isBoarded}
+            >
+              <Text className="text-white text-center text-xl">
+                Get Started
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   };
-
-  const { width, height } = Dimensions.get("window");
 
   const updateCurrentSlideIndex = (e: any) => {
     const currentOffsetX = e.nativeEvent.contentOffset.x;
@@ -154,31 +149,17 @@ const BoardingOne: React.FC<Props> = ({ navigation }) => {
     setCurrentSlideIndex(nextSlideIndex);
   };
   return (
-    <View className="flex-1  bg-white">
+    <View className="flex-1  ">
       <StatusBar barStyle="light-content" />
       <OnBoardingImage />
-      {/* <View style={{ height: height * 0.6 }} className="rounded-b-full">
-        <Image
-          source={require("../../../assets/images/general/boarding.png")}
-          className="h-full object-cover "
-          style={{ width: width }}
-        />
-      </View>
-      <View className="flex justify-center items-center">
-        <Image
-          source={require("../../../assets/prophix/logoWhite.png")}
-          className="h-fit w-fit object-contain z-20 absolute -top-40 "
-          // style={{ width: width }}
-        />
-      </View> */}
-      <SafeAreaView style={{ width: width }} className="flex">
+      <SafeAreaView style={{ width: width * 0.95 }} className="  mt-1 mx-auto">
         <FlatList
           ref={ref}
           data={slides}
-          contentContainerStyle={{
-            height: height * 0.15,
-            // width: width,
-          }}
+          // contentContainerStyle={{
+          //   height: height * 0.2,
+          //   // width: width,
+          // }}
           pagingEnabled
           horizontal
           onMomentumScrollEnd={updateCurrentSlideIndex}
