@@ -14,6 +14,9 @@ export type RouteListProps = {
       Drawer: undefined;
       Bottom: undefined;
       PostJob: undefined;
+      Services: undefined;
+      MyActivity: undefined;
+      JobsPosted: undefined;
       General: undefined;
       Stack: undefined;
       Auth: undefined;

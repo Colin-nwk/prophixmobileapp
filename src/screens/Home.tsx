@@ -55,7 +55,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
           <Pressable
             className=" bg-[#FFECEF] h-20 rounded active:bg-red-300/30 duration-300 ease-in-out transition-all p-4"
             style={{ width: width * 0.45 }}
-            // onPress={() => navigation.navigate("PostJob")}
+            onPress={() => navigation.navigate("MyActivity")}
           >
             <Image
               source={require("../../assets/images/general/work.png")}
@@ -66,6 +66,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
           <Pressable
             className=" bg-[#DFF1FF] h-20 rounded active:bg-blue-300/30 duration-300 ease-in-out transition-all p-4"
             style={{ width: width * 0.45 }}
+            onPress={() => navigation.navigate("Services")}
           >
             <Image
               source={require("../../assets/images/general/search.png")}
